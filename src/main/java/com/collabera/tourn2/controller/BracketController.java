@@ -1,4 +1,4 @@
-package com.collabera.tourn2.resource;
+package com.collabera.tourn2.controller;
 
 import com.collabera.tourn2.model.Bracket;
 import com.collabera.tourn2.repository.BracketRepository;
