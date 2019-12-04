@@ -4,5 +4,10 @@
       "name": "token.secret",
       "type": "java.lang.String",
       "description": "Token key"
-  }
-] }
+    },
+    {
+      "name": "token.expires",
+      "type": "java.lang.Long",
+      "description": "Token Expiration Length"
+    }
+  ] }

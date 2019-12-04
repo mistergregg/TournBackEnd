@@ -2,6 +2,7 @@ package com.collabera.tourn2.service;
 
 import com.collabera.tourn2.model.User;
 import com.collabera.tourn2.repository.UserRepository;
+import com.collabera.tourn2.security.JWTValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,9 @@ public class UserService
 {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JWTValidator validator;
 
     public User loadUserByUsername(String user) throws UsernameNotFoundException
     {
@@ -39,7 +43,7 @@ public class UserService
             }
         }
 
-        return new User();
+        return null;
     }
 
     public User createUser(User user)
@@ -69,5 +73,17 @@ public class UserService
         }
 
         return new User();
+    }
+
+    public Boolean checkUser(User user)
+    {
+        User aUser = validator.validate(user.getToken());
+
+        return !aUser.getUsername().equals("");
+    }
+
+    public User validate(User user)
+    {
+        return validator.validate(user.getToken());
     }
 }

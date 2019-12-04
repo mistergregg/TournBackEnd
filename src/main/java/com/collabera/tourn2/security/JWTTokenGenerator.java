@@ -1,6 +1,7 @@
 package com.collabera.tourn2.security;
 
 import com.collabera.tourn2.model.User;
+import com.collabera.tourn2.model.UserToken;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,23 +16,27 @@ public class JWTTokenGenerator
     @Value("${token.secret}")
     private String secret;
 
-    public User generate(User user)
-    {
-        // Token Expires after 5 days
-        long hours = 120;
-        long totalMillis = hours * 3600000;
+    @Value("${token.expires}")
+    private long totalMillis;
 
+    public UserToken generate(User user)
+    {
         Claims claims = Jwts.claims()
                 .setSubject(user.getUsername());
         claims.put("id", user.getId());
+        claims.put("iat", new Date(System.currentTimeMillis()));
 
-        User tmp = new User();
+        Date exp = new Date(System.currentTimeMillis() + totalMillis);
+        claims.put("exp", exp);
+
+        UserToken tmp = new UserToken();
         tmp.setToken(Jwts.builder()
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(totalMillis))
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact());
+
+        tmp.setExp(String.valueOf(exp.getTime()));
+        tmp.setUsername(user.getUsername());
 
         return tmp;
     }

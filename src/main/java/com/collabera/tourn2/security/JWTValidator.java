@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class JWTValidator {
 
@@ -15,6 +17,7 @@ public class JWTValidator {
     public User validate(String token)
     {
         User user = null;
+
         try {
             Claims body = Jwts.parser()
                     .setSigningKey(secret)
@@ -24,11 +27,20 @@ public class JWTValidator {
             // Creates a new user and gets info from user
             user = new User();
 
-            // Extracts info from token and puts it into user
-            user.setUsername(body.getSubject());
-            user.setId((String) body.get("id"));
-        }catch (Exception e){
+            // Gets the expiration time
+            Long exp = (Long)body.get("exp");
+
+            if (System.currentTimeMillis() < exp)
+            {
+                // Extracts info from token and puts it into user
+                user.setUsername(body.getSubject());
+                user.setId((String) body.get("id"));
+            }
+        }catch (Exception e)
+        {
             e.printStackTrace();
+
+            user = new User();
         }
 
         return user;

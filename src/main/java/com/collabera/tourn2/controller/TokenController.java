@@ -1,6 +1,7 @@
 package com.collabera.tourn2.controller;
 
 import com.collabera.tourn2.model.User;
+import com.collabera.tourn2.model.UserToken;
 import com.collabera.tourn2.security.JWTTokenGenerator;
 import com.collabera.tourn2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class TokenController
     private JWTTokenGenerator jwtTokenGenerator;
 
     @PostMapping("/generate")
-    public User generate(@RequestBody User user)
+    public UserToken generate(@RequestBody User user)
     {
 
         if(userService.checkLogin(user).getUsername() != null)
@@ -25,6 +26,12 @@ public class TokenController
             return jwtTokenGenerator.generate(user);
         }
 
+        return new UserToken();
+    }
+
+    @GetMapping("/user")
+    public User user()
+    {
         return new User();
     }
 }
