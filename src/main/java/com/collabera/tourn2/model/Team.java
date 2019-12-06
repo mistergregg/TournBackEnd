@@ -15,7 +15,7 @@ import java.util.List;
 @Document(collection = "Team")
 public class Team {
     @Id
-    public String id;
-    public String name;
-    public List<User> userList;
+    private String id;
+    private String name;
+    private List<User> userList;
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class Bracket
 {
     @Id
-    String id;
-    List<User> players;
-    Integer round;
+    private String id;
+    private List<User> players;
+    private Integer round;
 }

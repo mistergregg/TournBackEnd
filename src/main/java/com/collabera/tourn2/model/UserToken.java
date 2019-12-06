@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class UserToken {
     private String username;
-    private String exp;
+    private String expiresIn;
     private String token;
 }

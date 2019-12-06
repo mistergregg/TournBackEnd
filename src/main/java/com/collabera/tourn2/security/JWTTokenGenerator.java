@@ -35,7 +35,7 @@ public class JWTTokenGenerator
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact());
 
-        tmp.setExp(String.valueOf(exp.getTime()));
+        tmp.setExpiresIn(String.valueOf(totalMillis));
         tmp.setUsername(user.getUsername());
 
         return tmp;

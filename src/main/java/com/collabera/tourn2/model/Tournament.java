@@ -15,8 +15,8 @@ import java.util.List;
 @Document(collection = "Tournament")
 public class Tournament {
     @Id
-    public String id;
-    public String description;
-    public List<Team> teams;
-    public List<Bracket> brackets;
+    private String id;
+    private String description;
+    private List<Team> teams;
+    private List<Bracket> brackets;
 }
