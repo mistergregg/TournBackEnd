@@ -17,6 +17,7 @@ public class Bracket
 {
     @Id
     private String id;
-    private List<User> players;
-    private Integer round;
+    private List<Team> teams;
+    private User winner;
+    private User looser;
 }

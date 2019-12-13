@@ -6,6 +6,8 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -13,6 +15,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "User")
 public class User
 {
+    class UserTeams {
+        String teamId;
+        String teamName;
+    }
+
     @Id
     private String id;
     private String firstName;
@@ -20,4 +27,6 @@ public class User
     private String username;
     private String email;
     private String password;
+    private List<UserTeams> teams;
+    private int score;
 }

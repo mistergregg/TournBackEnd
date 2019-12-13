@@ -19,7 +19,7 @@ public class JWTTokenGenerator
     @Value("${token.expires}")
     private long totalMillis;
 
-    public UserToken generate(User user)
+    public UserToken generateUserToken(User user)
     {
         Claims claims = Jwts.claims()
                 .setSubject(user.getUsername());

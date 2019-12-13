@@ -23,7 +23,7 @@ public class TokenController
 
         if(userService.checkLogin(user).getUsername() != null)
         {
-            return jwtTokenGenerator.generate(user);
+            return jwtTokenGenerator.generateUserToken(user);
         }
 
         return new UserToken();

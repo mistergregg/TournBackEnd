@@ -6,15 +6,13 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
 public class JWTValidator {
 
     @Value("${token.secret}")
     private String secret;
 
-    public User validate(String token)
+    public User validateUserToken(String token)
     {
         User user = null;
 

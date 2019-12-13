@@ -12,11 +12,13 @@ import java.util.List;
 @Setter
 @ToString
 
-@Document(collection = "Tournament")
-public class Tournament {
+@Document(collection = "TournamentTeams")
+public class TournamentTeams {
     @Id
     private String id;
     private String description;
     private List<Team> teams;
     private List<Bracket> brackets;
+    private String owner;
+    private UserToken userToken;
 }

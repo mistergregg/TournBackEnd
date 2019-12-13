@@ -17,5 +17,12 @@ public class Team {
     @Id
     private String id;
     private String name;
-    private List<User> userList;
+    private String description;
+    private String owner;
+    private String ownerName;
+    private List<TeamPlayer> userList;
+    private Integer wins;
+    private Integer looses;
+    private Integer teamSize;
+    private UserToken userToken;
 }

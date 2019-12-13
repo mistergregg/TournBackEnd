@@ -25,12 +25,6 @@ public class UserController {
         return loggedInUser != null ? tokenService.generate(loggedInUser) : new UserToken();
     }
 
-    @PostMapping("/check")
-    public User check(@RequestBody User user)
-    {
-        return userService.validate(user);
-    }
-
     @PostMapping("/createUser")
     public UserToken createUser(@RequestBody User user)
     {
