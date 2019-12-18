@@ -3,6 +3,8 @@ package com.collabera.tourn2.service;
 import com.collabera.tourn2.model.*;
 import com.collabera.tourn2.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,12 +60,12 @@ public class TournamentService {
             return new Team();
         }
 
-        if(team.getName().equals(""))
+        if(team.getName().length() < 3)
         {
             return new Team();
         }
 
-        if(team.getDescription().equals(""))
+        if(team.getDescription().length() < 3)
         {
             return new Team();
         }
@@ -93,8 +95,47 @@ public class TournamentService {
 
         saveTeam.setUserList(teamList);
 
-        teamRepository.save(team);
+        teamRepository.save(saveTeam);
 
-        return team;
+        return saveTeam;
+    }
+
+    public List<Team> getTeams(UserToken userToken)
+    {
+        User user = tokenService.validate(userToken);
+
+        List<Team> teams = new ArrayList<Team>();
+
+
+        if(user != null)
+        {
+            int amount = Integer.parseInt(userToken.getExpiresIn());
+
+            if (amount < 1)
+            {
+                amount = 1;
+            }
+
+            int first = amount - 1;
+
+            teams = teamRepository.findAllByOwner(user.getId(), PageRequest.of(first, 10));
+        }
+
+        return teams;
+    }
+
+    public Long getAmountTeams(UserToken userToken)
+    {
+        User user = tokenService.validate(userToken);
+        if(user != null) {
+            return teamRepository.countAllByOwner(user.getId());
+        }
+
+        return Integer.toUnsignedLong(0);
+    }
+
+    private Long getAmountTeams(String id)
+    {
+        return teamRepository.countAllByOwner(id);
     }
 }

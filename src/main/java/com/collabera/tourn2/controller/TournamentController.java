@@ -1,28 +1,38 @@
 package com.collabera.tourn2.controller;
 
-import com.collabera.tourn2.model.TournamentTeams;
+import com.collabera.tourn2.model.Team;
 import com.collabera.tourn2.model.UserToken;
-import com.collabera.tourn2.service.TokenService;
-import com.collabera.tourn2.service.UserService;
+import com.collabera.tourn2.service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tournaments")
 public class TournamentController
 {
     @Autowired
-    UserService userService;
-
-    @Autowired
-    TokenService tokenService;
+    TournamentService tournamentService;
 
     @PostMapping("/addTeam")
-    public UserToken AddTeam(@RequestBody TournamentTeams tourn)
+    public Team AddTeam(@RequestBody Team team)
     {
-        return null;
+        return tournamentService.createTeam(team);
+    }
+
+    @PostMapping("/getTeams")
+    public List<Team> getTeams(@RequestBody UserToken token)
+    {
+        return tournamentService.getTeams(token);
+    }
+
+    @PostMapping("/getAmountTeams")
+    public Long getAmountTeams(@RequestBody UserToken token)
+    {
+        return tournamentService.getAmountTeams(token);
     }
 }
