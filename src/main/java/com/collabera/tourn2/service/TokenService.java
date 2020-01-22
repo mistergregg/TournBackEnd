@@ -29,4 +29,9 @@ public class TokenService
     {
         return jwtValidator.validateUserToken(userToken.getToken());
     }
+
+    public User validate(String token)
+    {
+        return jwtValidator.validateUserToken(token);
+    }
 }
